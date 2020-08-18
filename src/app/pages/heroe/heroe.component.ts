@@ -45,16 +45,10 @@ export class HeroeComponent implements OnInit {
     Swal.showLoading();
 
     let peticion: Observable<any>;
-/* .subscribe( resp => {
-        console.log('resp', resp);
-      }); */
     if (this.heroe.id) {
       peticion = this.heroesSerive.actualizarHeroe(this.heroe);
     } else {
       peticion = this.heroesSerive.crearHeroe(this.heroe);
-      /* .subscribe( resp => {
-        console.log('resp', resp);
-      }); */
     }
     peticion.subscribe(resp => {
       Swal.fire({
