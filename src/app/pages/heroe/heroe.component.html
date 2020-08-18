@@ -1,0 +1,48 @@
+<h1>Héroe <small> Nombre del Héroe</small></h1>
+<hr>
+
+<div class="row text-left">
+    <div class="col">
+        <button class="btn btn-danger" routerLink="/heroes">
+            <i class="fa fa-arrow-left">
+                Regresar
+            </i>
+        </button>
+    </div>
+</div>
+
+<div class="row animated fadeIn fast">
+    <div class="col">
+        <form (ngSubmit)="guardar(form)" #form="ngForm">
+            <div class="form-group">
+                <label> Firebase ID </label>
+                <input type="text" class="form-control" disabled="disabled" placeholder="FirebaseID" name= "id" [(ngModel)]="heroe.id">
+                <small class="form-text text-muted"> Este campo es autogenerado </small>
+            </div>
+            <div class="form-group">
+                <label> Nombre </label>
+                <input type="text" class="form-control" placeholder="Nombre del héroe" required name = "nombre "[(ngModel)]="heroe.nombre">
+            </div>
+            <div class="form-group">
+                <label> Poder </label>
+                <input type="text" class="form-control" name="poder" [(ngModel)]="heroe.poder"placeholder="Poder del héroe" required>
+            </div>
+            <div class="form-group">
+                <label> Estado </label>
+                <br>
+                <button *ngIf="heroe.vivo" (click)="heroe.vivo = false" class="btn btn-outline-success w-40" type="button">
+                    <i class="fa fa-smile-wink"> Vivo </i>
+                </button>
+                <button *ngIf="!heroe.vivo" (click)="heroe.vivo = true" class="btn btn-outline-danger w-40" type="button">
+                    <i class="fa fa-dizzy"> Muerto </i>
+                </button>
+            </div>
+            <hr>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary w-25">
+                    <i class="fa fa-save"> Guardar </i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
