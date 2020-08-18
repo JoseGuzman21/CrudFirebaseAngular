@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HeroeModel } from '../models/heroe.model';
-import { map } from 'rxjs/operators';
+import { map, delay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +30,36 @@ export class HeroesService {
     };
     delete heroeTemp.id;
     return this.http.put(`${this.url}/Heroes/${heroe.id}.json`, heroeTemp);
+  }
+
+  // tslint:disable-next-line: typedef
+  getHeroes() {
+    return this.http.get(`${this.url}/Heroes.json`)
+      .pipe(map( this.crearArreglo), delay(1500));
+  }
+
+  // tslint:disable-next-line: typedef
+  private crearArreglo(heroesObj: object) {
+    const heroes: HeroeModel[] = [];
+    console.log('heroes', heroesObj);
+    Object.keys(heroesObj).forEach(key => {
+      const heroe: HeroeModel = heroesObj[key];
+      heroe.id = key;
+      heroes.push(heroe);
+    });
+    if (heroesObj === null ) {
+      return [];
+    }
+    return heroes;
+  }
+
+  // tslint:disable-next-line: typedef
+  getHeroe(id: string) {
+    return this.http.get(`${this.url}/Heroes/${id}.json`);
+  }
+
+  // tslint:disable-next-line: typedef
+  borrarHeroe(id: string) {
+    return this.http.delete(`${this.url}/Heroes/${id}.json`);
   }
 }

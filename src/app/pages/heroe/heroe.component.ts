@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { HeroeModel } from '../../models/heroe.model';
 import { NgForm } from '@angular/forms';
 import { HeroesService } from '../../services/heroes.service';
-import Swal from 'sweetalert2';
 import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-heroe',
@@ -15,9 +16,18 @@ export class HeroeComponent implements OnInit {
   // tslint:disable-next-line: new-parens
   heroe = new HeroeModel;
 
-  constructor(private heroesSerive: HeroesService) { }
+  constructor(private heroesSerive: HeroesService,
+              private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id !== 'nuevo') {
+      this.heroesSerive.getHeroe(id)
+        .subscribe( (resp: HeroeModel) => {
+          this.heroe = resp;
+          this.heroe.id = id;
+        });
+    }
   }
 
   // tslint:disable-next-line: typedef
